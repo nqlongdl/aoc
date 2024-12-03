@@ -21,28 +21,45 @@ void input() {
     }
 }
 
+bool is_safe(vector<int> v) {
+    int dif = v[1] - v[0];
+    if (!dif || abs(dif) > 3) return false;
+
+    for (int i = 2; i < v.size(); i++) {
+        int cur_dif = v[i] - v[i - 1];
+        if (dif * cur_dif <= 0 || abs(cur_dif) > 3)
+            return false;
+    }
+    return true;
+}
+
 // Part 1
 void part_1() {
     int ans = 0;
-    for (auto& v : a) {
-        int dif = v[1] - v[0];
-        if (!dif || abs(dif) > 3) continue;
-
-        bool ok = true;
-        for (int i = 2; i < v.size(); i++) {
-            int cur_dif = v[i] - v[i - 1];
-            if (dif * cur_dif <= 0 || abs(cur_dif) > 3) {
-                ok = false;
-                break;
-            }
-        }
-        if (ok) ans++;
-    }
+    for (auto& v : a)
+        ans += is_safe(v);
     cout << ans << '\n';
 }
 
 // Part 2
 void part_2() {
+    int ans = 0;
+    for (auto& v : a) {
+        if (is_safe(v)) ++ans;
+        else {
+            bool ok = false;
+            for (int i = 0; i < v.size(); i++) {
+                vector<int> tmp = v;
+                tmp.erase(tmp.begin() + i);
+                if (is_safe(tmp)) {
+                    ok = true;
+                    break;
+                }
+            }
+            ans += ok;
+        }
+    }
+    cout << ans << '\n';
 }
 
 
