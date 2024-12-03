@@ -21,6 +21,8 @@ void input() {
     }
 }
 
+// ----------------------------------------------------------------
+
 bool is_safe(vector<int> v) {
     int dif = v[1] - v[0];
     if (!dif || abs(dif) > 3) return false;
@@ -32,6 +34,7 @@ bool is_safe(vector<int> v) {
     }
     return true;
 }
+
 
 // Part 1
 void part_1() {
